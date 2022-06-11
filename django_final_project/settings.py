@@ -83,8 +83,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django_final_project',
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'djangolabs',
+        'PASSWORD': 'Printf(01276316958)',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
@@ -136,3 +136,4 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'account.User'
+
