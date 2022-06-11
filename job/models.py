@@ -13,8 +13,12 @@ class Job(models.Model):
     modification_time = models.DateField(auto_now=True)
     tags = models.ManyToManyField(Tag)
     applied_developers = models.ManyToManyField('account.user',verbose_name='Applied developers',related_name='applied_developers')
-    developer = models.ForeignKey(User,verbose_name='Accepted developer',on_delete=models.CASCADE,related_name='accepted_developer')
+    developer = models.ForeignKey(User,verbose_name='Accepted developer',on_delete=models.CASCADE, blank=True ,null=True,related_name='accepted_developer')
     created_by = models.ForeignKey(User,verbose_name='Job owner',on_delete=models.CASCADE ,related_name='company_name')
     status = models.CharField(choices=s,max_length=12)
+
+
+    def __str__(self):
+        return self.name
 
 
