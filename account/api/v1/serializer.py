@@ -10,7 +10,8 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['username','password','password_confirm','email','user_type','gender','date_of_birth',]
         extra_kwargs= {
             'password':{'write_only':True},
-            'email' : {'required':True}
+            'email' : {'required':True},
+            'date_of_birth': {'required':True}
 
         }
     def save(self,**kwargs):
