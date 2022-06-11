@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'tag',
     'rest_framework',
     'rest_framework.authtoken',
-
 ]
 
 MIDDLEWARE = [
@@ -141,3 +140,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'account.User'
+
+REST_FRAMEWORK = {
+'DEFAULT_AUTHENTICATION_CLASSES':['rest_framework.authentication.TokenAuthentication'],
+'DEFAULT_PERMISSION_CLASSES':['rest_framework.permissions.IsAuthenticated']
+}
+
+# EMAIL_HOST = 'smtp.live.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'test1234123456789@outlook.com'
+# EMAIL_HOST_PASSWORD = 'KK123456789'
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = 'd27e3c19355872'
+EMAIL_HOST_PASSWORD = '7a5f7f905fad8b'
+EMAIL_PORT = '2525'

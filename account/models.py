@@ -5,7 +5,7 @@ from tag.models import Tag
 # Create your models here.
 class User(AbstractUser):
 
-    rules = (
+    roles = (
         ('developer','developer'),
         ('recruiter','recruiter')
     )
@@ -13,10 +13,10 @@ class User(AbstractUser):
         ('M','male'),
         ('F','female')
     )
-    user_type = models.CharField(choices=rules,max_length=10 )
-    allow_mail_notification = models.BooleanField(verbose_name='Allow mail notification',default=True)
+    user_type = models.CharField(choices=roles,max_length=10 )
+    allow_mail_notification =  models.BooleanField(verbose_name='Allow mail notification',default=True)
     gender = models.CharField(choices=gen, max_length=6)
-    date_of_birth = models.DateField(verbose_name='Date of Birth', null=True )
+    date_of_birth = models.DateField(verbose_name='Date of Birth',null=True)
     tags = models.ManyToManyField(Tag,null=True,blank=True)
     cv = models.FileField(upload_to='users_cv/',verbose_name='CV',null=True,blank=True)
     address = models.CharField(max_length=80,null=True,blank=True)
