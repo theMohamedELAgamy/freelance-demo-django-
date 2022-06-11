@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'tag',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
@@ -84,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django_final_project',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'klorets12',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
@@ -136,3 +137,18 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'account.User'
+
+REST_FRAMEWORK = {
+'DEFAULT_AUTHENTICATION_CLASSES':['rest_framework.authentication.TokenAuthentication'],
+'DEFAULT_PERMISSION_CLASSES':['rest_framework.permissions.IsAuthenticated']
+}
+
+# EMAIL_HOST = 'smtp.live.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'test1234123456789@outlook.com'
+# EMAIL_HOST_PASSWORD = 'KK123456789'
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = 'd27e3c19355872'
+EMAIL_HOST_PASSWORD = '7a5f7f905fad8b'
+EMAIL_PORT = '2525'
