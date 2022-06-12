@@ -8,7 +8,7 @@ from .models import User
 class AccountUserAdmin(UserAdmin):
     fieldsets = (
         (None, {"fields": ("username", "password")}),
-        (_("Personal info"), {"fields": ("first_name", "last_name", "email","gender")}),
+        (_("Personal info"), {"fields": ("first_name", "last_name", "email","gender","tags")}),
         (
             _("Permissions"),
             {
@@ -28,7 +28,8 @@ class AccountUserAdmin(UserAdmin):
 
 
 
-
+class UserAdmin(admin.ModelAdmin):
+    list_display=("user_type","allow_mail_notification","gender","date_of_birth","address","history",'tags')
 
 
 
