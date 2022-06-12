@@ -19,3 +19,7 @@ class Job(models.Model):
     status = models.CharField(choices=s,max_length=12,default='open')
 
 
+    def __str__(self):
+        return self.name
+
+
