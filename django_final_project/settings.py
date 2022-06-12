@@ -83,8 +83,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django_final_project',
-        'USER': 'rowan',
-        'PASSWORD': 'Password123#@',
+        'USER': 'djangolabs',
+        'PASSWORD': 'Printf(01276316958)',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
