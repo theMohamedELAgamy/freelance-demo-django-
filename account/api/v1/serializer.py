@@ -15,6 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
             'profile_picture': {'required': True}
 
         }
+    depth=1
     def save(self,**kwargs):
         print(self.validated_data['username'])
         user = User(
@@ -40,3 +41,4 @@ class JobUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username','user_type','id']
+        

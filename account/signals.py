@@ -10,4 +10,5 @@ def user_post_save_action(**kwargs):
         subj= 'Welcome !!'
         msg = f'welcome {user}'
         receivers=[user.email]
+        print(receivers)
         send_mail(subject=subj,message=msg,from_email='test.test1233345@gmail.com',recipient_list=receivers)

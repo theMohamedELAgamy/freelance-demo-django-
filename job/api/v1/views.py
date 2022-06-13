@@ -5,6 +5,8 @@ from job.models import Job
 from .serializer import JobSerializer
 from account.models import User
 import json
+from .serializer import JobSerializer,GetJobSerializer
+
 @api_view(['GET'])
 def hello (request):
     return Response(data={'hi':'hi'},status=status.HTTP_200_OK)
@@ -12,12 +14,12 @@ def hello (request):
 @api_view(['GET'])
 def all_jobs(request):
     jobs = Job.objects.filter(status="open").values()
-    ser=JobSerializer(instance=jobs,many=True)
+    ser=GetJobSerializer(instance=jobs,many=True)
     return Response(data=ser.data, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def create_job(request):
-        print(request.data)
+        # print(request.data)
         serializer = JobSerializer(data=request.data)
 
         if (serializer.is_valid()):
@@ -38,6 +40,12 @@ def update_job(request,id):
             return Response(data=serializer.data,status=status.HTTP_201_CREATED)
         else:
             return Response(data=serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['Get'])
+def get_job_details(request,id):
+    job = Job.objects.get(pk=id)
+    ser = GetJobSerializer(instance=job)
+    return Response(data=ser.data, status=status.HTTP_200_OK)
 
 @api_view(['DELETE'])
 def delete_job(request,id):

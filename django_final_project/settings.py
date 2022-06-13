@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'notification',
     'tag',
     'rest_framework',
-    'rest_framework.authtoken',
-    'django_extensions'
+    'rest_framework.authtoken'
+    
 ]
 
 MIDDLEWARE = [
@@ -54,7 +54,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+CORS_ALLOW_ALL_ORIGINS =True
 
 ROOT_URLCONF = 'django_final_project.urls'
 
@@ -163,6 +166,8 @@ REST_FRAMEWORK = {
 # EMAIL_HOST_USER = 'test1234123456789@outlook.com'
 # EMAIL_HOST_PASSWORD = 'KK123456789'
 EMAIL_HOST = 'smtp.mailtrap.io'
-EMAIL_HOST_USER = 'd27e3c19355872'
-EMAIL_HOST_PASSWORD = '7a5f7f905fad8b'
+EMAIL_HOST_USER = 'd5f31644c43b24'
+EMAIL_HOST_PASSWORD = 'e7d0f1d078a9c7'
 EMAIL_PORT = '2525'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'    
+#  python3 -m pip install django-cors-headers
