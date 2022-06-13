@@ -40,14 +40,20 @@ class UserSerializer(serializers.ModelSerializer):
 class DeveloperSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
-        fields=['username',"allow_mail_notification"]
-        optional_fields=['gender',"date_of_birth","cv","tags"]
-        #depth = 1
+        fields = ['username','date_of_birth','date_joined','cv','allow_mail_notification','tags']
+        optional_fields=['gender',"date_of_birth","cv","tags","allow_mail_notification",'username',]
+        extra_kwargs= {
+            'password':{'write_only':True},
+            'email' : {'required':True},
+            'date_of_birth': {'required':True}
+
+        }
+        depth = 1
 
 class RecruterSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
         fields=['username',"allow_mail_notification"]
         optional_fields=['gender',"date_of_birth","address","history"]
-        #depth = 1
+        depth = 1
 
