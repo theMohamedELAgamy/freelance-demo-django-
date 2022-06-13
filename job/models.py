@@ -15,7 +15,7 @@ class Job(models.Model):
     description=models.fields.TextField(verbose_name='job description',default='NO Description')
     applied_developers = models.ManyToManyField('account.user',verbose_name='Applied developers',related_name='applied_developers',null=True)
     developer = models.ForeignKey(User,verbose_name='Accepted developer',on_delete=models.CASCADE,related_name='accepted_developer',null=True)
-    created_by = models.ForeignKey(User,verbose_name='Job owner',on_delete=models.CASCADE ,related_name='company_name')
+    created_by = models.ForeignKey(User,verbose_name='Job owner',on_delete=models.CASCADE ,related_name='company_name',null=True)
     status = models.CharField(choices=s,max_length=12,default='open')
 
 

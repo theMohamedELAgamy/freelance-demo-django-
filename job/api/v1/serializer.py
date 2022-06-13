@@ -10,7 +10,7 @@ class JobSerializer(serializers.ModelSerializer):
             'name' : {'required':True},
             'tags': {'required': True},
             'description': {'required': True},
-            # 'created_by' : {'required':True}
+            'applied_developers' : {'required':True}
         }
           # depth=1
 class TagSrializer(serializers.ModelSerializer):
