@@ -17,6 +17,7 @@ class User(AbstractUser):
     allow_mail_notification =  models.BooleanField(verbose_name='Allow mail notification',default=True)
     gender = models.CharField(choices=gen, max_length=6)
     date_of_birth = models.DateField(verbose_name='Date of Birth',null=True)
+    profile_picture = models.ImageField(upload_to='user_photos',null=True)
     tags = models.ManyToManyField(Tag,null=True,blank=True)
     cv = models.FileField(upload_to='users_cv/',verbose_name='CV',null=True,blank=True)
     address = models.CharField(max_length=80,null=True,blank=True)

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'tag',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
@@ -83,8 +84,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django_final_project',
-        'USER': 'djangolabs',
-        'PASSWORD': 'Printf(01276316958)',
+        'USER': 'root',
+        'PASSWORD': 'klorets12',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
@@ -132,8 +133,8 @@ STATIC_URL = 'static/'
 AUTHENTICATION_BACKENDS = (
     ('django.contrib.auth.backends.ModelBackend'),
 )
-MEDIA_URL='/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -145,6 +146,16 @@ REST_FRAMEWORK = {
 'DEFAULT_AUTHENTICATION_CLASSES':['rest_framework.authentication.TokenAuthentication'],
 'DEFAULT_PERMISSION_CLASSES':['rest_framework.permissions.IsAuthenticated']
 }
+
+# STATIC_URL = 'static/'
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static')
+# ]
+# STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
+#
+# # Media Config
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
 
 # EMAIL_HOST = 'smtp.live.com'
 # EMAIL_PORT = 587
