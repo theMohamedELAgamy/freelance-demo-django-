@@ -14,6 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
             'date_of_birth': {'required':True}
 
         }
+    depth=1
     def save(self,**kwargs):
         print(self.validated_data['username'])
         user = User(
@@ -32,3 +33,4 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(self.validated_data['password'])
         user.save()
         return user
+        
