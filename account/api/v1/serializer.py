@@ -3,6 +3,10 @@ User = get_user_model()
 from rest_framework import serializers
 
 # Create your models here.
+#make Developer for serializer contains developer fields only
+#another serializer for company contains field only
+
+#serializer for sign up for user
 class UserSerializer(serializers.ModelSerializer):
     password_confirm = serializers.CharField(write_only=True)
     class Meta:
@@ -42,3 +46,23 @@ class JobUserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['username','user_type','id']
         
+class DeveloperSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=User
+        fields = ['username','date_of_birth','date_joined','cv','allow_mail_notification','tags']
+        optional_fields=['gender',"date_of_birth","cv","tags","allow_mail_notification",'username',]
+        extra_kwargs= {
+            'password':{'write_only':True},
+            'email' : {'required':True},
+            'date_of_birth': {'required':True}
+
+        }
+        depth = 1
+
+class RecruterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=User
+        fields=['username',"allow_mail_notification"]
+        optional_fields=['gender',"date_of_birth","address","history"]
+        depth = 1
+
