@@ -160,3 +160,4 @@ EMAIL_HOST_USER = 'd5f31644c43b24'
 EMAIL_HOST_PASSWORD = 'e7d0f1d078a9c7'
 EMAIL_PORT = '2525'
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'    
+#  python3 -m pip install django-cors-headers
