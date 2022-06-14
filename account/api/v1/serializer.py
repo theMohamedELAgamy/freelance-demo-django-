@@ -49,7 +49,7 @@ class JobUserSerializer(serializers.ModelSerializer):
 class DeveloperSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
-        fields = ['username','date_of_birth','date_joined','cv','allow_mail_notification','tags']
+        fields = ['username','date_of_birth','date_joined','cv','allow_mail_notification','tags','user_type']
         optional_fields=['gender',"date_of_birth","cv","tags","allow_mail_notification",'username',]
         extra_kwargs= {
             'password':{'write_only':True},
@@ -62,7 +62,8 @@ class DeveloperSerializer(serializers.ModelSerializer):
 class RecruterSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
-        fields=['username',"allow_mail_notification"]
+        fields=['username',"allow_mail_notification",'user_type','address']
+        # fields='__all__'
         optional_fields=['gender',"date_of_birth","address","history"]
         depth = 1
 

@@ -56,7 +56,8 @@ def user_read(request, user_id):
     if user_instance.user_type == 'developer':
          serializer = DeveloperSerializer(instance=user_instance)
     elif user_instance.user_type == 'recruiter':
-         serializer = RecruterSerializer(instance=user_instance, data=request.data)
+        serializer = RecruterSerializer(instance=user_instance)
+
     return Response(serializer.data)
 
 
