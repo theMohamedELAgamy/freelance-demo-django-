@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 User = get_user_model()
 from rest_framework import serializers
+from tag.api.v1.serializers import TagShow
 
 # Create your models here.
 #make Developer for serializer contains developer fields only
@@ -47,6 +48,7 @@ class JobUserSerializer(serializers.ModelSerializer):
         fields = ['username','user_type','id']
         
 class DeveloperSerializer(serializers.ModelSerializer):
+    tags= TagShow(many=True)
     class Meta:
         model=User
         fields = ['username','date_of_birth','date_joined','cv','allow_mail_notification','tags','user_type']
