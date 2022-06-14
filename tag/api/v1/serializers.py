@@ -5,3 +5,9 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = '__all__'
+
+
+class TagShow(serializers.ModelSerializer):
+    class Meta:
+        model=Tag
+        fields = ['name','id']
