@@ -8,7 +8,7 @@ from .models import User
 class AccountUserAdmin(UserAdmin):
     fieldsets = (
         (None, {"fields": ("username", "password")}),
-        (_("Personal info"), {"fields": ("first_name", "last_name", "email","gender")}),
+        (_("Personal info"), {"fields": ("first_name", "last_name", "email","gender","tags")}),
         (
             _("Permissions"),
             {
@@ -23,7 +23,11 @@ class AccountUserAdmin(UserAdmin):
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined","date_of_birth")}),
     )
-
+    list_display = ['username','email','get_user_tags']
+    def get_user_tags(self,obj):
+        tags = ', '.join([tag.name for tag in obj.tags.all()])
+        # print( f'object is {obj.director}')
+        return f'tags : {tags}'
 #admin.site.register(User)
 
 

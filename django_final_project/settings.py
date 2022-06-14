@@ -85,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django_final_project',
         'USER': 'root',
-        'PASSWORD': 'klorets12',
+        'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
@@ -166,3 +166,4 @@ EMAIL_HOST = 'smtp.mailtrap.io'
 EMAIL_HOST_USER = 'd27e3c19355872'
 EMAIL_HOST_PASSWORD = '7a5f7f905fad8b'
 EMAIL_PORT = '2525'
+

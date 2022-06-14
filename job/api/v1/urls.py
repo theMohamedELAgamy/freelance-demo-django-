@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import hello,all_jobs,create_job,update_job,delete_job,apply,assign_developer
+from .views import hello,all_jobs,create_job,update_job,delete_job,apply,assign_developer,finish_job
 
 urlpatterns = [
     path('/hello',hello, name='hello'),
@@ -9,6 +9,7 @@ urlpatterns = [
     path('/delete/<int:id>',delete_job, name='delete_job'),
     path('/<id>/assign/<developer_id>',assign_developer ,name='assign'),
     path('/<id>/apply',apply,name='apply'),
+    path('/<id>/finish/<user_id>',finish_job,name='finish_job')
 
 
 

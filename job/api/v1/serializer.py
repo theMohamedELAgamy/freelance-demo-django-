@@ -13,6 +13,6 @@ class JobSerializer(serializers.ModelSerializer):
             'description': {'required': True},
             'created_by' : {'required':True}
         }
-          depth=1
+          # depth=1
 
 
