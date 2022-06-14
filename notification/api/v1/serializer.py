@@ -8,4 +8,10 @@ class NotificationSerializer(serializers.ModelSerializer):
           model = Notification
           fields = '__all__'
           depth=1
+
+class NotificationSerializerCreate(serializers.ModelSerializer):
+     # job=GetJobSerializer(many=True)
+     class Meta:
+          model = Notification
+          fields = '__all__'
           
