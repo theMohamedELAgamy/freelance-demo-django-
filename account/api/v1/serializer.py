@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
     password_confirm = serializers.CharField(write_only=True)
     class Meta:
         model = User
-        fields = ['username','password','password_confirm','email','user_type','gender','date_of_birth','profile_picture',]
+        fields = ['username','password','password_confirm','email','user_type','gender','date_of_birth','profile_picture']
         extra_kwargs= {
             'password':{'write_only':True},
             'email' : {'required':True},
@@ -50,12 +50,12 @@ class DeveloperSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
         fields = ['username','date_of_birth','date_joined','cv','allow_mail_notification','tags','user_type']
-        optional_fields=['gender',"date_of_birth","cv","tags","allow_mail_notification",'username',]
         extra_kwargs= {
-            'password':{'write_only':True},
+            'username' : {'required':True},
             'email' : {'required':True},
-            'date_of_birth': {'required':True}
-
+            'date_of_birth': {'required':True},
+            'tags':{'required':True},
+            'gender':{'required':True},
         }
         depth = 1
 
@@ -64,6 +64,13 @@ class RecruterSerializer(serializers.ModelSerializer):
         model=User
         fields=['username',"allow_mail_notification",'user_type','address']
         # fields='__all__'
-        optional_fields=['gender',"date_of_birth","address","history"]
+        extra_kwargs = {
+            'username': {'required': True},
+            'email': {'required': True},
+            'date_of_birth': {'required': True},
+            'address': {'required': True},
+            'gender': {'required': True},
+            'history':{'required':True}
+        }
         depth = 1
 

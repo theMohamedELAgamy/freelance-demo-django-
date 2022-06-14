@@ -53,6 +53,7 @@ def user_update(request, user_id):
 def user_read(request, user_id):
     response = {'data': None, 'status': status.HTTP_400_BAD_REQUEST}
     user_instance = User.objects.get(id=user_id)
+    print(user_instance)
     if user_instance.user_type == 'developer':
          serializer = DeveloperSerializer(instance=user_instance)
     elif user_instance.user_type == 'recruiter':
@@ -62,16 +63,18 @@ def user_read(request, user_id):
 
 
 @api_view(['GET'])
-def job_read(request, user_id):
+def view_recruiter_jobs(request, user_id):
     response = {'data': None, 'status': status.HTTP_200_OK}
     user_instance = User.objects.get(id=user_id)
-    if user_instance.user_type == 'developer':
-        job = Job.objects.all()
+    if user_instance.user_type == 'recruiter':
+        job = Job.objects.filter(created_by_id=user_id)
+        print(job)
         serializer = JobSerializer(instance=job, many=True)
+        return Response(serializer.data)
     return Response(**response)
 
 
-class GetJob(generics.ListAPIView):
+class GetDeveloperJob(generics.ListAPIView):
     queryset = Job.objects.all()
     def list(self, request, user_id):
         try:
@@ -83,7 +86,6 @@ class GetJob(generics.ListAPIView):
                 developer_tags = Tag.objects.get(id=i)
             return Response(serializer.data)
         except :
-
             return JsonResponse({'error': "No jobs"})
             pass
 
