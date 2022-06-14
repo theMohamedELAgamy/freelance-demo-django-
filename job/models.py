@@ -20,6 +20,4 @@ class Job(models.Model):
 
 
     def __str__(self):
-        return self.name
-
-
+        return f' name is {self.name} ,tags are  {self.tags} id is {self.id}'

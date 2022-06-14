@@ -6,6 +6,8 @@ from .serializer import JobSerializer
 from account.models import User
 import json
 from .serializer import JobSerializer,GetJobSerializer
+from django.core.mail import send_mail
+from django.dispatch import receiver
 
 @api_view(['GET'])
 def hello (request):
@@ -94,19 +96,59 @@ def apply(request,id):
            return Response(data='serializer.errors', status=status.HTTP_400_BAD_REQUEST)
 @api_view(['PATCH'])
 def assign_developer(request,id,developer_id):
+    rejected_devs = []
     try:
-        user = User.objects.get(pk=developer_id)
+        accepted_developer= User.objects.get(pk=developer_id)
     except:
         return Response(data='there is no such user', status=status.HTTP_400_BAD_REQUEST)
+    print('0')
     job = Job.objects.get(pk=id)
-    if(job.status=='open'):
-            Job.objects.filter(pk=id).update(developer=user , status='in_progress')
+    for developer in job.applied_developers.all():
+        print(f' applied developer id {developer.id}   ///    accepted developer id {developer_id}')
+        if(not developer.id == int(developer_id)):
+            rejected_devs.append(developer.email)
 
+    print(rejected_devs)
+    if(job.created_by == request.user):
+        if(job.status=='open'):
+            Job.objects.filter(pk=id).update(developer=accepted_developer , status='in_progress')
+            send_email(accepted_developer.email, request.user.email, job,rejected_devs)
             return  Response(data='done', status=status.HTTP_201_CREATED)
 
+        else:
+            return Response(data='this job has been assigned to somebody else', status=status.HTTP_400_BAD_REQUEST)
     else:
-        return Response(data='this job has been assigned to somebody else', status=status.HTTP_400_BAD_REQUEST)
+        return Response(data='the job owner only can assign job to a user', status=status.HTTP_400_BAD_REQUEST)
 
 
 
+def send_email(accepted_email,recruiter_email,job,rejected_devs):
+    subj = 'Hired !!'
+    subj2 ='Bad News !!'
+    msg = f'you have been accepted to this job {job}'
+    msg2 = f'sorry you are rejected '
+    print(f'rejected emails {rejected_devs}')
+    print(f'accepted email {accepted_email}')
+    print(f'recruiter email {recruiter_email}')
+    receivers = [accepted_email]
+    receivers2 = rejected_devs
+    send_mail(subject=subj, message=msg, from_email=recruiter_email, recipient_list=receivers)
+    send_mail(subject=subj2, message=msg2, from_email=recruiter_email, recipient_list=receivers2)
+
+@api_view(['PATCH'])
+def finish_job(request,id,user_id):
+    job = Job.objects.get(pk=id)
+    try:
+        user = User.objects.get(pk=id)
+    except:
+        return Response(data='there is no such user', status=status.HTTP_400_BAD_REQUEST)
+    if(job.status=='in_progress'):
+        if(job.developer == user or job.created_by == user):
+            Job.objects.filter(pk=id).update(status='finished')
+            return Response(data='done', status=status.HTTP_201_CREATED)
+        else:
+            return Response(data='you are not allowed to finish this job', status=status.HTTP_400_BAD_REQUEST)
+
+    else:
+        return Response(data='you cant finish task that is not in progress', status=status.HTTP_400_BAD_REQUEST)
 

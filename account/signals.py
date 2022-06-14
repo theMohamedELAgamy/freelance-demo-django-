@@ -7,8 +7,7 @@ def user_post_save_action(**kwargs):
     if(kwargs.get('created')):
         user = kwargs.get('instance')
         print(f'user : {user.email}')
-        subj= 'Welcome !!'
-        msg = f'welcome {user}'
-        receivers=[user.email]
-        print(receivers)
+        subj= 'New User !! '
+        msg = f'New user has been created  {user} and his/her mail is {user.email} '
+        receivers=['admin@admin.com']
         send_mail(subject=subj,message=msg,from_email='test.test1233345@gmail.com',recipient_list=receivers)
