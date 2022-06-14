@@ -28,15 +28,7 @@ import time
 #                         time.sleep(6)
             
 
-# def create_notification(tag,user_id,job_id):
-#        data={
-#             'message':f'a job with tag {tag} is created',
-#             "developer":user_id,
-#             'job':job_id
-#         }
-#        serializer = NotificationSerializer(data=data)
-#        if (serializer.is_valid()):
-#             serializer.save()
+
        
 @receiver(m2m_changed,sender=Job.tags.through)
 def job_post_save_action(**kwargs): 
@@ -47,6 +39,7 @@ def job_post_save_action(**kwargs):
         tags=job.tags.all()
         developers_arr=[]
         selected_dev =[]
+        notified_dev=[]
         for tag in tags:
             tags_arr.append(tag)
             tags_dictionary[tag.name]=1
@@ -62,13 +55,29 @@ def job_post_save_action(**kwargs):
                 if(tags_dictionary.get(tagg.name)):
                     counter+=1
 
-            if(counter==len(tags_arr) and user.allow_mail_notification==True):
+            if(counter==len(tags_arr) and user.allow_mail_notification==True and user.user_type=='developer'):
                 selected_dev.append(user.email)
+            if(counter==len(tags_arr) and user.user_type=='developer'):
+                notified_dev.append(int(user.id))
+            for user in notified_dev:
+                print(user)
+                create_notification(tags_dictionary,user,job.id)
 
 
+        print(notified_dev)
         print(f' d emails :    {selected_dev}')
         subj= 'New Job !!'
-        msg = f'New job has been posted with your qualification {job}. Apply quickly'
+        msg = f'New job has been posted with your qualification {job.name}. Apply quickly'
         receivers=selected_dev
         send_mail(subject=subj,message=msg,from_email='mohamedelagame82@gmail.com',recipient_list=receivers)
         
+
+def create_notification(tag,user_id,job_id):
+       data={
+            'message':f'a job with tag {tag} is created',
+            "developer":user_id,
+            'job':job_id
+        }
+       serializer = NotificationSerializer(data=data)
+       if (serializer.is_valid()):
+            serializer.save()
