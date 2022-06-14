@@ -8,7 +8,8 @@ import json
 from .serializer import JobSerializer,GetJobSerializer
 from django.core.mail import send_mail
 from django.dispatch import receiver
-
+from notification.models import Notification
+from notification.api.v1.serializer import NotificationSerializerCreate,NotificationSerializer
 @api_view(['GET'])
 def hello (request):
     return Response(data={'hi':'hi'},status=status.HTTP_200_OK)
@@ -139,16 +140,27 @@ def send_email(accepted_email,recruiter_email,job,rejected_devs):
 def finish_job(request,id,user_id):
     job = Job.objects.get(pk=id)
     try:
-        user = User.objects.get(pk=id)
+        user = User.objects.get(pk=user_id)
     except:
         return Response(data='there is no such user', status=status.HTTP_400_BAD_REQUEST)
     if(job.status=='in_progress'):
         if(job.developer == user or job.created_by == user):
             Job.objects.filter(pk=id).update(status='finished')
+            finish_notification(job)
             return Response(data='done', status=status.HTTP_201_CREATED)
+            
         else:
             return Response(data='you are not allowed to finish this job', status=status.HTTP_400_BAD_REQUEST)
 
     else:
         return Response(data='you cant finish task that is not in progress', status=status.HTTP_400_BAD_REQUEST)
 
+def finish_notification(job):
+   
+    a=Notification(
+            message=f'a job with name {job.name} is finished',
+            developer=job.developer,
+            job=job
+        )
+    a.save()
+   

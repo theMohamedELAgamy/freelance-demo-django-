@@ -7,6 +7,7 @@ from account.models import User
 from django.core.mail import send_mail
 from django.dispatch import receiver
 from .api.v1.serializer import GetJobSerializer
+from notification.models import Notification
 from notification.api.v1.serializer import NotificationSerializer
 # from notification.api.v1.views import create_notification
 from .views import get_tags
@@ -58,10 +59,9 @@ def job_post_save_action(**kwargs):
             if(counter==len(tags_arr) and user.allow_mail_notification==True and user.user_type=='developer'):
                 selected_dev.append(user.email)
             if(counter==len(tags_arr) and user.user_type=='developer'):
-                notified_dev.append(int(user.id))
+                notified_dev.append(user)
             for user in notified_dev:
-                print(user)
-                create_notification(tags_dictionary,user,job.id)
+                create_notification(tags_dictionary,user,job)
 
 
         print(notified_dev)
@@ -72,12 +72,10 @@ def job_post_save_action(**kwargs):
         send_mail(subject=subj,message=msg,from_email='mohamedelagame82@gmail.com',recipient_list=receivers)
         
 
-def create_notification(tag,user_id,job_id):
-       data={
-            'message':f'a job with tag {tag} is created',
-            "developer":user_id,
-            'job':job_id
-        }
-       serializer = NotificationSerializer(data=data)
-       if (serializer.is_valid()):
-            serializer.save()
+def create_notification(tag,user_id,job):
+    a=Notification(
+            message=f'a job with tag {tag} is created',
+            developer=user_id,
+            job=job
+        )
+    a.save()
