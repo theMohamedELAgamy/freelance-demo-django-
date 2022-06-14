@@ -20,10 +20,11 @@ def job_post_save_action2(sender,instance,**kwargs):
             msg = f'you have a job in {tag}'
             for user in users:
                 if(user.user_type=='developer'):
-                    receivers=[user.email]
                     create_notification(tag,user.id,instance.id)
-                    send_mail(subject=subj,message=msg,from_email='mohamedelagame82@gmail.com',recipient_list=receivers)
-                    time.sleep(6)
+                    if(user.allow_mail_notification==True):
+                        receivers=[user.email]
+                        send_mail(subject=subj,message=msg,from_email='mohamedelagame82@gmail.com',recipient_list=receivers)
+                        time.sleep(6)
             
 
 def create_notification(tag,user_id,job_id):

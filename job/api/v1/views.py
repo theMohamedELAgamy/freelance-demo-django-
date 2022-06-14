@@ -49,9 +49,14 @@ def get_job_details(request,id):
 
 @api_view(['DELETE'])
 def delete_job(request,id):
-    if Job.objects.get(pk=id).delete():
-        return Response(data={'detail':'job deleted successfully'},status=status.HTTP_204_NO_CONTENT)
-#              {
+    job=Job.objects.get(pk=id)
+    if (job.status=='open'):
+        if Job.objects.get(pk=id).delete():
+            return Response(data={'detail':'job deleted successfully'},status=status.HTTP_204_NO_CONTENT)
+    else:
+        return Response(data={'detail':'job cant be deleted '},status=status.HTTP_403_FORBIDDEN)
+
+#           {
 #             "name":"job1",
 #             "tags":"tag1",
 #             "description":"descrip1",
