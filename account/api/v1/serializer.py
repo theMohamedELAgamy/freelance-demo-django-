@@ -59,6 +59,13 @@ class DeveloperSerializer(serializers.ModelSerializer):
         }
         depth = 1
 
+
+class AppliedDeveloperSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=User
+        fields=['username','id']
+
+
 class RecruterSerializer(serializers.ModelSerializer):
     class Meta:
         model=User

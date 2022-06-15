@@ -10,4 +10,4 @@ class TagSerializer(serializers.ModelSerializer):
 class TagShow(serializers.ModelSerializer):
     class Meta:
         model=Tag
-        fields = ['name','id']
+        fields = ['name']

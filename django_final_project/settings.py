@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'tag',
     'rest_framework',
     'rest_framework.authtoken'
+
     
 ]
 
@@ -88,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django_final_project',
         'USER': 'root',
-        'PASSWORD': 'klorets12',
+        'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
