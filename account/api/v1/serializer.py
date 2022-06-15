@@ -16,7 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
             'password':{'write_only':True},
             'email' : {'required':True},
             'date_of_birth': {'required':True},
-            'profile_picture': {'required': True}
+            #'profile_picture': {'required': True}
 
         }
     depth=1
@@ -28,7 +28,7 @@ class UserSerializer(serializers.ModelSerializer):
             date_of_birth=self.validated_data['date_of_birth'],
             user_type = self.validated_data['user_type'],
             gender = self.validated_data['gender'],
-            profile_picture = self.validated_data['profile_picture']
+            #profile_picture = self.validated_data['profile_picture']
         )
 
 
