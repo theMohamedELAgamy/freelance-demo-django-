@@ -20,6 +20,18 @@ class JobSerializer(serializers.ModelSerializer):
 
 
         }
+class CreateJobSerializer(serializers.ModelSerializer):
+      class Meta:
+          model = Job
+          fields = '__all__'
+          extra_kwargs={
+            'name' : {'required':True},
+            'tags': {'required': True},
+            'description': {'required': True},
+            'created_by' : {'required':True},
+
+
+        }
           # depth=1
 class TagSrializer(serializers.ModelSerializer):
     class Meta:
