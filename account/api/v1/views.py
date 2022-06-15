@@ -1,3 +1,5 @@
+import json
+
 from rest_framework.response import Response
 from .serializer import UserSerializer, DeveloperSerializer, RecruterSerializer
 from rest_framework import status
@@ -9,7 +11,8 @@ from tag.models import Tag
 from job.api.v1.serializer import JobSerializer
 from rest_framework import generics
 from django.http import JsonResponse
-
+from rest_framework.authtoken.views import obtain_auth_token
+from django.shortcuts import render, redirect , reverse
 
 @api_view(['POST'])
 @permission_classes('')
@@ -50,7 +53,9 @@ def user_update(request, user_id):
 
 
 @api_view(['GET'])
-def user_read(request, user_id):
+def user_read(request,user_id):
+    if(user_id == str(0)):
+        user_id=request.user.id
     response = {'data': None, 'status': status.HTTP_400_BAD_REQUEST}
     user_instance = User.objects.get(id=user_id)
     print(user_instance)
@@ -68,9 +73,8 @@ def view_recruiter_jobs(request, user_id):
     user_instance = User.objects.get(id=user_id)
     if user_instance.user_type == 'recruiter':
         job = Job.objects.filter(created_by_id=user_id)
-        print(job)
         serializer = JobSerializer(instance=job, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
     return Response(**response)
 
 
@@ -80,14 +84,9 @@ class GetDeveloperJob(generics.ListAPIView):
         try:
             job = Job.objects.get(developer_id=user_id, status="in_progress")
             serializer = JobSerializer(job)
-            tags_data = serializer.data["tags"]
-            print(tags_data)
-            for i in tags_data:
-                developer_tags = Tag.objects.get(id=i)
             return Response(serializer.data)
-        except :
-            return JsonResponse({'error': "No jobs"})
+        except Exception as e:
+            return JsonResponse({'error': f'{e}'})
             pass
-
 
 

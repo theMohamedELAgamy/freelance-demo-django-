@@ -22,14 +22,19 @@ def all_jobs(request):
 
 @api_view(['POST'])
 def create_job(request):
-        # print(request.data)
-        serializer = JobSerializer(data=request.data)
-
-        if (serializer.is_valid()):
-            serializer.save()
-            return Response(data=serializer.data,status=status.HTTP_201_CREATED)
+        creator_id =request.data.get('created_by')
+        creator = User.objects.get(pk=creator_id)
+        print(creator)
+        if(creator.user_type=='recruiter'):
+            serializer = JobSerializer(data=request.data)
+            print(request.data)
+            if (serializer.is_valid()):
+                serializer.save()
+                return Response(data=serializer.data,status=status.HTTP_201_CREATED)
+            else:
+                return Response(data=serializer.errors,status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response(data=serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+            return Response(data={"error":"user cant create unless he/she is recruiter"}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PUT','PATCH'])
 def update_job(request,id):

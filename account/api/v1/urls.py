@@ -9,5 +9,5 @@ urlpatterns = [
     path('profile/<int:user_id>/update',user_update,name='update'),
     path('profile/<int:user_id>/developer_job',GetDeveloperJob.as_view(),name='developer_job'),
     path('profile/<int:user_id>/recruiter_jobs', view_recruiter_jobs, name='recruiter_job'),
-    path('profile/<int:user_id>',user_read,name='profile'),
+    path('profile/<user_id>',user_read,name='profile'),
 ]

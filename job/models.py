@@ -13,11 +13,10 @@ class Job(models.Model):
     modification_time = models.DateField(auto_now=True)
     tags = models.ManyToManyField(Tag)
     description=models.fields.TextField(verbose_name='job description',default='NO Description')
-    applied_developers = models.ManyToManyField('account.user',verbose_name='Applied developers',related_name='applied_developers',null=True)
+    applied_developers = models.ManyToManyField('account.user',verbose_name='Applied developers',related_name='applied_developers',null=True,blank=True)
     developer = models.ForeignKey(User,verbose_name='Accepted developer',on_delete=models.CASCADE,related_name='accepted_developer',null=True)
     created_by = models.ForeignKey(User,verbose_name='Job owner',on_delete=models.CASCADE ,related_name='company_name',null=True)
     status = models.CharField(choices=s,max_length=12,default='open')
-
 
     def __str__(self):
         return f' name is {self.name} ,tags are  {self.tags} id is {self.id}'
