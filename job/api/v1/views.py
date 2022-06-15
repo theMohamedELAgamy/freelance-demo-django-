@@ -1,6 +1,6 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,permission_classes,authentication_classes
 from job.models import Job
 from .serializer import JobSerializer
 from account.models import User
@@ -35,6 +35,10 @@ def create_job(request):
                 return Response(data=serializer.errors,status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(data={"error":"user cant create unless he/she is recruiter"}, status=status.HTTP_400_BAD_REQUEST)
+        permission_classes = (
+            permissions.IsAuthenticatedOrReadOnly,
+            IsViewer.has_permission,
+        )
 
 @api_view(['PUT','PATCH'])
 def update_job(request,id):
