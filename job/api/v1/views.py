@@ -5,7 +5,7 @@ from job.models import Job
 from .serializer import JobSerializer
 from account.models import User
 import json
-from .serializer import JobSerializer,GetJobSerializer
+from .serializer import JobSerializer,GetJobSerializer,CreateJobSerializer
 from django.core.mail import send_mail
 from django.dispatch import receiver
 from notification.models import Notification
@@ -26,7 +26,7 @@ def create_job(request):
         creator = User.objects.get(pk=creator_id)
         print(creator)
         if(creator.user_type=='recruiter'):
-            serializer = JobSerializer(data=request.data)
+            serializer = CreateJobSerializer(data=request.data)
             print(request.data)
             if (serializer.is_valid()):
                 serializer.save()
