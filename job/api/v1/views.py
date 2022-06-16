@@ -24,17 +24,19 @@ def all_jobs(request):
 def create_job(request):
         creator_id =request.data.get('created_by')
         creator = User.objects.get(pk=creator_id)
-        # print(creator)
-        if(creator.user_type=='recruiter'):
-            serializer = CreateJobSerializer(data=request.data)
-            print(request.data)
-            if (serializer.is_valid()):
-                serializer.save()
-                return Response(data=serializer.data,status=status.HTTP_201_CREATED)
+        if(request.user.user_type == 'recruiter'):
+            if(creator.user_type=='recruiter'):
+                serializer = CreateJobSerializer(data=request.data)
+                print(request.data)
+                if (serializer.is_valid()):
+                    serializer.save()
+                    return Response(data=serializer.data,status=status.HTTP_201_CREATED)
+                else:
+                    return Response(data=serializer.errors,status=status.HTTP_400_BAD_REQUEST)
             else:
-                return Response(data=serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+                return Response(data={"error":"user cant create unless he/she is recruiter"}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response(data={"error":"user cant create unless he/she is recruiter"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(data={"error":"user cant create unless he/she is recruiter"}, status=status.HTTP_400_BAD_REQUEST)       
         permission_classes = (
             permissions.IsAuthenticatedOrReadOnly,
             IsViewer.has_permission,
@@ -44,9 +46,9 @@ def create_job(request):
 def update_job(request,id):
         job = Job.objects.get(pk=id)
         if(request.method == 'PUT'):
-            serializer = JobSerializer(data=request.data,instance=job)
+            serializer = CreateJobSerializer(data=request.data,instance=job)
         else:
-            serializer = JobSerializer(data=request.data, instance=job,partial=True)
+            serializer = CreateJobSerializer(data=request.data, instance=job,partial=True)
         if (serializer.is_valid()):
             serializer.save()
             return Response(data=serializer.data,status=status.HTTP_201_CREATED)
