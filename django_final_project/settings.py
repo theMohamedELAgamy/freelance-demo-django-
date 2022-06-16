@@ -88,8 +88,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django_final_project',
-         'USER': 'djangolabs',
-        'PASSWORD': 'Printf(01276316958)',
+         'USER': 'rowan',
+        'PASSWORD': 'Password123#@',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {
@@ -147,8 +147,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'account.User'
 
 REST_FRAMEWORK = {
-'DEFAULT_AUTHENTICATION_CLASSES':['rest_framework.authentication.TokenAuthentication'],
-'DEFAULT_PERMISSION_CLASSES':['rest_framework.permissions.IsAuthenticated']
+'DEFAULT_AUTHENTICATION_CLASSES':['rest_framework.authentication.TokenAuthentication', 'rest_framework.authentication.SessionAuthentication'],
+'DEFAULT_PERMISSION_CLASSES':['rest_framework.permissions.IsAuthenticated','rest_framework.permissions.IsAuthenticatedOrReadOnly']
 }
 
 # STATIC_URL = 'static/'
