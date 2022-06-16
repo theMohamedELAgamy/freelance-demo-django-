@@ -47,7 +47,7 @@ def user_update(request, user_id):
             serializer = RecruterSerializer(instance=user_instance, data=request.data)
         else:
             serializer = None
-        if serializer.is_valdate_of_birthid():
+        if serializer.is_valid():
             serializer.save()
             response['data'] = serializer.data
             response['status'] = status.HTTP_201_CREATED
