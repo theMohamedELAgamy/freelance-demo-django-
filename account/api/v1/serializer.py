@@ -9,6 +9,7 @@ from tag.api.v1.serializers import TagShow
 #serializer for sign up for user
 class UserSerializer(serializers.ModelSerializer):
     password_confirm = serializers.CharField(write_only=True)
+    
     class Meta:
         model = User
         fields = ['username','password','password_confirm','email','user_type','gender','date_of_birth','profile_picture']
@@ -19,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
             #'profile_picture': {'required': True}
 
         }
-    depth=1
+    # depth=1
     def save(self,**kwargs):
         print(self.validated_data['username'])
         user = User(
@@ -28,6 +29,7 @@ class UserSerializer(serializers.ModelSerializer):
             date_of_birth=self.validated_data['date_of_birth'],
             user_type = self.validated_data['user_type'],
             gender = self.validated_data['gender'],
+            # tags = self.validated_data['tags'],
             #profile_picture = self.validated_data['profile_picture']
         )
 
@@ -47,6 +49,8 @@ class JobUserSerializer(serializers.ModelSerializer):
         fields = ['username','user_type','id']
         
 class DeveloperSerializer(serializers.ModelSerializer):
+    tags=TagShow(many=True)
+
     class Meta:
         model=User
         fields = ['username','date_of_birth','date_joined','cv','allow_mail_notification','tags','user_type','email','gender']
@@ -80,4 +84,20 @@ class RecruterSerializer(serializers.ModelSerializer):
             'history':{'required':True}
         }
         depth = 1
+
+class CreateUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=User
+        # fields=['username',"allow_mail_notification",'user_type','address','email','gender','history','date_of_birth']
+        fields='__all__'
+        extra_kwargs = {
+            'username': {'required': True},
+            'email': {'required': True},
+            'date_of_birth': {'required': True},
+            # 'address': {'required': True},
+            'gender': {'required': True},
+            'tags': {'required': True},
+            # 'history':{'required':True}
+            
+        }
 

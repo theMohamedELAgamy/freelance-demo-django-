@@ -2,7 +2,7 @@ import json
 
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-from .serializer import UserSerializer, DeveloperSerializer, RecruterSerializer
+from .serializer import UserSerializer, DeveloperSerializer, RecruterSerializer,CreateUserSerializer
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import ListAPIView, UpdateAPIView, CreateAPIView, DestroyAPIView, RetrieveAPIView
@@ -19,7 +19,7 @@ from django.shortcuts import render, redirect, reverse
 @api_view(['POST'])
 @permission_classes('')
 def user_signup(request):
-    serializer = UserSerializer(data=request.data)
+    serializer = CreateUserSerializer(data=request.data)
     if (serializer.is_valid()):
         serializer.save()
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)
