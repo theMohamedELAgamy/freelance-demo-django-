@@ -39,7 +39,7 @@ class TagSrializer(serializers.ModelSerializer):
           fields = '__all__'
 
 class GetJobSerializer(serializers.ModelSerializer):
-        tags = TagSrializer(many=True)
+        # tags = TagSrializer(many=True)
         class Meta:
           model = Job
           fields ="__all__"

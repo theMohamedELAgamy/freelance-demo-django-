@@ -24,7 +24,7 @@ def all_jobs(request):
 def create_job(request):
         creator_id =request.data.get('created_by')
         creator = User.objects.get(pk=creator_id)
-        print(creator)
+        # print(creator)
         if(creator.user_type=='recruiter'):
             serializer = CreateJobSerializer(data=request.data)
             print(request.data)
