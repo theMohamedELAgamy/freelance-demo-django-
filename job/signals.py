@@ -69,7 +69,7 @@ def job_post_save_action(**kwargs):
         subj= 'New Job !!'
         msg = f'New job has been posted with your qualification {job.name}. Apply quickly'
         receivers=selected_dev
-        send_mail(subject=subj,message=msg,from_email='mohamedelagame82@gmail.com',recipient_list=receivers)
+        # send_mail(subject=subj,message=msg,from_email='mohamedelagame82@gmail.com',recipient_list=receivers)
         
 
 def create_notification(tag,user_id,job):

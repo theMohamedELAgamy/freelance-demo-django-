@@ -19,7 +19,7 @@ from django.shortcuts import render, redirect, reverse
 @api_view(['POST'])
 @permission_classes('')
 def user_signup(request):
-    serializer = CreateUserSerializer(data=request.data)
+    serializer = UserSerializer(data=request.data)
     if (serializer.is_valid()):
         serializer.save()
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)

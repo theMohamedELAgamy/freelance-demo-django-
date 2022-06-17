@@ -49,7 +49,7 @@ class JobUserSerializer(serializers.ModelSerializer):
         fields = ['username','user_type','id']
         
 class DeveloperSerializer(serializers.ModelSerializer):
-    tags=TagShow(many=True)
+    # tags=TagShow(many=True)
 
     class Meta:
         model=User
